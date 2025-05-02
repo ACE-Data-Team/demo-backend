@@ -1,7 +1,7 @@
 from fastapi import FastAPI # type: ignore
 from fastapi.middleware.cors import CORSMiddleware # type: ignore
 from fastapi.responses import HTMLResponse # type: ignore
-from app.charts.home_charts import (
+from app.demo.home_charts import (
     generate_staff_donut_chart,
     generate_student_donut_chart,
     generate_staff_trend_chart,
