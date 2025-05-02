@@ -13,6 +13,11 @@ def build_query_with_faculty(base_query: str, faculty: str = None):
     return base_query, []
 
 
+def build_query_with_faculty(base_query: str, faculty: str = None):
+    if faculty:
+        return f"{base_query} WHERE faculty = $1", [faculty]
+    return base_query, []
+
 async def fetch_student_data(conn, faculty: str = None):
     base_query = "SELECT session, type, count FROM student"
     query, params = build_query_with_faculty(base_query, faculty)
