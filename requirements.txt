@@ -3,3 +3,7 @@ uvicorn
 jinja2
 asyncpg
 python-dotenv
+plotly
+numpy
+pandas
+
