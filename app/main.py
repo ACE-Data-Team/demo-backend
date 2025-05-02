@@ -8,6 +8,7 @@ from app.charts.home_charts import (
     generate_student_trend_chart
 )
 import pandas as pd # type: ignore
+from db import database
 
 app = FastAPI()
 
@@ -21,12 +22,18 @@ app.add_middleware(
 )
 
 # Load data
-df_staff = pd.read_csv('/home/prechy/Dev/ace_projects/demo-backend/app/demo/academic_staff_data.csv')
-df_students = pd.read_csv('/home/prechy/Dev/ace_projects/demo-backend/app/demo/student_data.csv')
+
+async def get_staff_data():
+    return await database.get_staff_dataframe()
+
+async def get_student_data():
+    return await database.get_student_dataframe()
+
 
 @app.get("/charts/staff-donut", response_class=HTMLResponse)
 async def staff_donut_chart(session: str = "2023/2024"):
     # Generate the chart HTML
+    df_staff = await get_staff_data()
     chart_html = generate_staff_donut_chart(df_staff, session)
     # Return only the raw chart HTML
     return chart_html
@@ -34,6 +41,7 @@ async def staff_donut_chart(session: str = "2023/2024"):
 @app.get("/charts/student-donut", response_class=HTMLResponse)
 async def student_donut_chart(session: str = "2023/2024"):
     # Generate the chart HTML
+    df_students = await get_student_data()
     chart_html = generate_student_donut_chart(df_students, session)
     # Return only the raw chart HTML
     return chart_html
@@ -41,6 +49,7 @@ async def student_donut_chart(session: str = "2023/2024"):
 @app.get("/charts/staff-trend", response_class=HTMLResponse)
 async def staff_trend_chart():
     # Generate the chart HTML
+    df_staff = await get_staff_data()
     chart_html = generate_staff_trend_chart(df_staff)
     # Return only the raw chart HTML
     return chart_html
@@ -48,6 +57,7 @@ async def staff_trend_chart():
 @app.get("/charts/student-trend", response_class=HTMLResponse)
 async def student_trend_chart():
     # Generate the chart HTML
+    df_students = await get_student_data()
     chart_html = generate_student_trend_chart(df_students)
     # Return only the raw chart HTML
     return chart_html
