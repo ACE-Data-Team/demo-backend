@@ -24,7 +24,7 @@ def generate_staff_donut_chart(df_staff: pd.DataFrame, session: str) -> str:
         showarrow=False,
         font=dict(size=25)
     )
-    return fig.to_html(include_plotlyjs='False', full_html=False)
+    return fig.to_html(include_plotlyjs=False, full_html=False)
 
 def generate_student_donut_chart(df_students: pd.DataFrame, session: str) -> str:
     """
@@ -48,7 +48,7 @@ def generate_student_donut_chart(df_students: pd.DataFrame, session: str) -> str
         showarrow=False,
         font=dict(size=25)
     )
-    return fig.to_html(include_plotlyjs='False', full_html=False)
+    return fig.to_html(include_plotlyjs=False, full_html=False)
 
 def generate_staff_trend_chart(df_staff: pd.DataFrame) -> str:
     """
@@ -101,7 +101,7 @@ def generate_staff_trend_chart(df_staff: pd.DataFrame) -> str:
         barmode="overlay",
         template="plotly_white"
     )
-    return fig.to_html(include_plotlyjs='False', full_html=False)
+    return fig.to_html(include_plotlyjs=False, full_html=False)
 
 def generate_student_trend_chart(df_students: pd.DataFrame) -> str:
     """
@@ -130,5 +130,5 @@ def generate_student_trend_chart(df_students: pd.DataFrame) -> str:
         plot_bgcolor='rgba(0,0,0,0)',
         legend=dict(orientation="v", x=.8, y=0, xanchor="left")
     )
-    return fig.to_html(include_plotlyjs='False', full_html=False)
+    return fig.to_html(include_plotlyjs=False, full_html=False)
 
