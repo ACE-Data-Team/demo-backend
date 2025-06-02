@@ -1,2 +1,16 @@
 venv/
 .env
+**/__pycache__/
+**.csv
+**/demo
+import_csv.py
+init_database.py
+migrations/
+__pycache__/
+# Ignore Python bytecode files 
+*.pyc
+*.pyo
+# Ignore database files 
+*.sqlite3
+# Ignore log files
+*.log
