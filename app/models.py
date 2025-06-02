@@ -1,7 +1,7 @@
-from sqlalchemy import Column, Integer, String, Float, ForeignKey, Date
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
-from database.db import Base
+from sqlalchemy import Column, Integer, String, Float, ForeignKey, Date # type: ignore
+from sqlalchemy.ext.declarative import declarative_base # type: ignore
+from sqlalchemy.orm import relationship # type: ignore
+from database.db import Base # type: ignore
 
 class StudentData(Base):
     """Model for student data by Level, faculty and department"""
