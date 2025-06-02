@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Charts</title>
+    <!-- Include the latest version of Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+    <script>
+        // Function to fetch and embed the chart
+        async function loadChart(endpoint, divId) {
+            try {
+                // Fetch the chart HTML from the FastAPI endpoint
+                const response = await fetch(endpoint);
+                if (!response.ok) {
+                    throw new Error(`Failed to load chart: ${response.statusText}`);
+                }
+                const chartHtml = await response.text();
+        
+                // Create a temporary container to parse the HTML
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = chartHtml;
+        
+                // Inject the non-script content into the target div
+                const targetDiv = document.getElementById(divId);
+                targetDiv.innerHTML = tempDiv.innerHTML;
+        
+                // Extract and execute the <script> tags
+                const scripts = tempDiv.getElementsByTagName('script');
+                for (let script of scripts) {
+                    const newScript = document.createElement('script');
+                    if (script.src) {
+                        // If the script has a src attribute, copy it
+                        newScript.src = script.src;
+                    } else {
+                        // Otherwise, copy the inline script content
+                        newScript.textContent = script.textContent;
+                    }
+                    document.body.appendChild(newScript); // Append to the body to execute
+                }
+            } catch (error) {
+                console.error("Error loading chart:", error);
+                document.getElementById(divId).innerHTML = `<p>Error loading chart: ${error.message}</p>`;
+            }
+        }
+
+        // Load charts when the page loads
+        window.onload = function () {
+            loadChart("http://localhost:8000/charts/student-donut?session=2023/2024", "student-chart");
+            loadChart("http://localhost:8000/charts/staff-donut?session=2023/2024", "staff-chart");
+            loadChart("http://localhost:8000/charts/staff-trend", "staff-trend-chart");
+            loadChart("http://localhost:8000/charts/student-trend", "student-trend-chart");
+        };
+    </script>
+</head>
+<body>
+    <h1>Dynamic Charts</h1>
+
+    <!-- Pre-existing divs for the charts -->
+    <h2>Staff Donut Chart</h2>
+    <div id="staff-chart" style="width: 800px; height: 600px; border: 1px solid #ccc;"></div>
+
+    <h2>Student Donut Chart</h2>
+    <div id="student-chart" style="width: 800px; height: 600px; border: 1px solid #ccc;"></div>
+
+    <h2>Staff Trend Chart</h2>
+    <div id="staff-trend-chart" style="width: 800px; height: 600px; border: 1px solid #ccc;"></div>
+
+    <h2>Student Trend Chart</h2>
+    <div id="student-trend-chart" style="width: 800px; height: 600px; border: 1px solid #ccc;"></div>
+</body>
+</html>
