@@ -20,7 +20,7 @@ class StudentData(Base):
         return f"<StudentData(year={self.level}, department={self.department}, count={self.count})>"
     
 
-class Academic_StaffData(Base):
+class AcademicStaffData(Base):
     """Model for staff data by faculty and department"""
     __tablename__ = "academic_staff"
     
@@ -37,7 +37,7 @@ class Academic_StaffData(Base):
     
 
 
-class Enrollment_Data(Base):
+class EnrollmentData(Base):
     """Model for enrollment data by session"""
     __tablename__ = "enrollment_data"
     
@@ -51,4 +51,32 @@ class Enrollment_Data(Base):
     count = Column(Integer, nullable=False)
     
     def __repr__(self):
-        return f"<Enrollmeant_data(Session={self.session}, faculty = {self.faculty}, department={self.department}, position={self.position})>"
+        return f"<Enrollment_data(Session={self.session}, faculty = {self.faculty}, department={self.department}, position={self.position})>"
+
+
+
+class IncomeData(Base):
+    """Model for tracking income records"""
+    __tablename__ = "income"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    session = Column(String, index=True, nullable=False)  # e.g., '1996/1997'
+    source = Column(String, nullable=False)               # e.g., 'N.U.C Grant'
+    amount = Column(Float, nullable=False)                 # e.g., 405876729.0
+    
+    def __repr__(self):
+        return f"<IncomeData(session={self.session}, source={self.source}, amount={self.amount:,.2f})>"
+
+
+
+class ExpenditureData(Base):
+    """Model for tracking expenditure records"""
+    __tablename__ = "expenditure"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    session = Column(String, index=True, nullable=False)  # e.g., '1996/1997'
+    type = Column(String, nullable=False)                 # e.g., 'Salaries', 'Maintenance'
+    amount = Column(Float, nullable=False)                # e.g., 12000000.0
+    
+    def __repr__(self):
+        return f"<ExpenditureData(session={self.session}, type={self.type}, amount={self.amount:,.2f})>"
